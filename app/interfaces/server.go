@@ -24,5 +24,8 @@ func (s *Server) Serve() {
 		return c.String(http.StatusOK, "pong")
 	})
 
+	botRouter(s.Router)
+	viewRouter(s.Router)
+
 	s.Router.Start(fmt.Sprintf(":%s", config.PORT))
 }
