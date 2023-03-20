@@ -18,6 +18,7 @@ func NewServer() *Server {
 }
 
 func (s *Server) Serve() {
+
 	s.Router.Use(logger.EchoLogger())
 
 	s.Router.GET("/ping", func(c echo.Context) error {

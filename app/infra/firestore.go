@@ -38,13 +38,3 @@ func Initialize() (*Firestore, error) {
 
 	return &Firestore{Client: client, Context: ctx}, nil
 }
-
-var FIRESTORE *Firestore
-
-func init() {
-	var err error
-	FIRESTORE, err = Initialize()
-	if err != nil {
-		log.Fatalln(err)
-	}
-}
