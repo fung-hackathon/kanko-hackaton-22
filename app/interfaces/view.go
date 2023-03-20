@@ -26,4 +26,5 @@ func viewRouter(e *echo.Echo, handler *handler.ViewHandler) {
 
 	e.GET("/spots", handler.Spots)
 	e.GET("/gallery", handler.Gallery)
+	e.Static("/static", "static")
 }
