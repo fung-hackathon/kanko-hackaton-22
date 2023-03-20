@@ -40,8 +40,9 @@ type gallery struct {
 }
 
 type quiz struct {
-	Q string
-	A string
+	Q       string
+	A       string
+	Comment string
 }
 
 func (h *ViewHandler) Gallery(c echo.Context) error {
@@ -81,8 +82,9 @@ func (h *ViewHandler) Gallery(c echo.Context) error {
 			OpenTime: data.SpotsData[i].OpenTime,
 			Image:    data.SpotsData[i].Image,
 			Quiz: quiz{
-				Q: data.SpotsData[i].Quiz.Q,
-				A: data.SpotsData[i].Quiz.A,
+				Q:       data.SpotsData[i].Quiz.Q,
+				A:       data.SpotsData[i].Quiz.A,
+				Comment: data.SpotsData[i].Quiz.Comment,
 			},
 			Progress: newProg,
 		}

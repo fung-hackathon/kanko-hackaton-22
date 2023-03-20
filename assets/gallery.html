@@ -14,11 +14,16 @@
         <img src="{{ .Image }}" />
         <p>
           問題: {{ .Quiz.Q }} <br />
-          解答: {{ .Quiz.A }}
+          解答: {{ .Quiz.A }} <br />
+          {{ .Quiz.Comment }}
         </p>
       </li>
       {{ end }}
     {{ end }}
    </ol>
+   <footer>
+    <hr />
+    このページの本文とデータは <a href="https://www.city.hakodate.hokkaido.jp/">函館市ウェブサイト</a> のオープンデータを利用しています。
+   </footer>
   </body>
 </html>

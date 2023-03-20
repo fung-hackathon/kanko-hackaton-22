@@ -10,9 +10,14 @@
     {{ range .Spots }}
     <li>
       <h4><a href="{{ .Url }}">{{ .Name }}</a></h4>
+      <img src="{{ .Image }}" />
       <p>営業時間 {{ .OpenTime }}</p>
     </li>
     {{ end }}
    </ol>
+   <footer>
+    <hr />
+    このページの本文とデータは <a href="https://www.city.hakodate.hokkaido.jp/">函館市ウェブサイト</a> のオープンデータを利用しています。
+   </footer>
   </body>
 </html>
