@@ -7,12 +7,17 @@
   <body>
    <h1>集めたクイズ</h1>
    <ol>
-    {{ range .Spots }}
-    <li>
-      <h4><a href="{{ .Url }}">{{ .Name }}</a></h4>
-      <img src="{{ .Image }}" />
-      <p>営業時間 {{ .OpenTime }}</p>
-    </li>
+    {{ range .Gallery }}
+      {{if .Progress}}
+      <li>
+        <h4><a href="{{ .Url }}">{{ .Name }}</a></h4>
+        <img src="{{ .Image }}" />
+        <p>
+          問題: {{ .Quiz.Q }} <br />
+          解答: {{ .Quiz.A }}
+        </p>
+      </li>
+      {{ end }}
     {{ end }}
    </ol>
   </body>

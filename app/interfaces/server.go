@@ -29,7 +29,7 @@ func (s *Server) Serve() {
 	}
 	command := command.New(infra)
 	botHandler := handler.NewBotHandler(command)
-	viewHandler := handler.NewViewHandler()
+	viewHandler := handler.NewViewHandler(infra)
 
 	// Routing
 	s.Router.Use(logger.EchoLogger())
