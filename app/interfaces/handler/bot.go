@@ -30,13 +30,14 @@ func (h *BotHandler) Bot(c echo.Context) error {
 
 	var commandReply string
 	var err error
+	var quickReply interface{}
 	if len(text) >= 2 && text[:2] == "> " {
-		commandReply, err = h.command.ReadCommand(text[2:])
+		commandReply, quickReply, err = h.command.ReadCommand(text[2:], req.Events[0].Source.UserID)
 		if err != nil {
 			return c.String(http.StatusInternalServerError, err.Error())
 		}
 	} else {
-		commandReply, err = h.command.ReadText(text)
+		commandReply, quickReply, err = h.command.ReadText(text, req.Events[0].Source.UserID)
 		if err != nil {
 			return c.String(http.StatusInternalServerError, err.Error())
 		}
@@ -49,7 +50,11 @@ func (h *BotHandler) Bot(c echo.Context) error {
 
 	if commandReply != "" {
 		reply.Messages = []message.Message{
-			{Type: "text", Text: commandReply},
+			{
+				Type:       "text",
+				Text:       commandReply,
+				QuickReply: quickReply,
+			},
 		}
 	}
 

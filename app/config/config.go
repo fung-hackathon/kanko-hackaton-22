@@ -29,10 +29,10 @@ func init() {
 		panic(err)
 	}
 
-	// GOOGLE_APPLICATION_CREDENTIALS, err = getGOOGLE_APPLICATION_CREDENTIALS()
-	// if err != nil {
-	// 	panic(err)
-	// }
+	GOOGLE_APPLICATION_CREDENTIALS, err = getGOOGLE_APPLICATION_CREDENTIALS()
+	if err != nil {
+		panic(err)
+	}
 
 	LINE_CHANNEL_ACCESS_TOKEN, err = getLINE_CHANNEL_ACCESS_TOKEN()
 	if err != nil {
@@ -54,14 +54,14 @@ func getPORT() (string, error) {
 	return e, nil
 }
 
-// func getGOOGLE_APPLICATION_CREDENTIALS() (string, error) {
-// 	key := "GOOGLE_APPLICATION_CREDENTIALS"
-// 	e := os.Getenv(key)
-// 	if e == "" {
-// 		return "", fmt.Errorf("the environment variable %s must be filled", key)
-// 	}
-// 	return e, nil
-// }
+func getGOOGLE_APPLICATION_CREDENTIALS() (string, error) {
+	key := "GOOGLE_APPLICATION_CREDENTIALS"
+	e := os.Getenv(key)
+	if e == "" {
+		return "", fmt.Errorf("the environment variable %s must be filled", key)
+	}
+	return e, nil
+}
 
 func getLINE_CHANNEL_ACCESS_TOKEN() (string, error) {
 	key := "LINE_CHANNEL_ACCESS_TOKEN"
