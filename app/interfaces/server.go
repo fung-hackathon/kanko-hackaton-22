@@ -29,6 +29,7 @@ func (s *Server) Serve() {
 	}
 	command := command.New(infra)
 	botHandler := handler.NewBotHandler(command)
+	viewHandler := handler.NewViewHandler()
 
 	// Routing
 	s.Router.Use(logger.EchoLogger())
@@ -38,7 +39,7 @@ func (s *Server) Serve() {
 	})
 
 	botRouter(s.Router, botHandler)
-	viewRouter(s.Router)
+	viewRouter(s.Router, viewHandler)
 
 	s.Router.Start(fmt.Sprintf(":%s", config.PORT))
 }

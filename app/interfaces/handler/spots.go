@@ -9,7 +9,13 @@ import (
 	"github.com/labstack/echo/v4"
 )
 
-func Spots(c echo.Context) error {
+type ViewHandler struct{}
+
+func NewViewHandler() *ViewHandler {
+	return &ViewHandler{}
+}
+
+func (h *ViewHandler) Spots(c echo.Context) error {
 	data := struct {
 		Spots []data.Spot
 	}{
