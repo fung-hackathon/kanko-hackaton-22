@@ -1,7 +1,11 @@
 package interfaces
 
-import "github.com/labstack/echo/v4"
+import (
+	"kanko-hackaton-22/app/interfaces/handler"
 
-func botRouter(e *echo.Echo) {
+	"github.com/labstack/echo/v4"
+)
 
+func botRouter(e *echo.Echo, handler *handler.BotHandler) {
+	e.POST("/", handler.Bot)
 }

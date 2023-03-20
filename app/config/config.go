@@ -8,6 +8,7 @@ import (
 var (
 	PORT                           string
 	GOOGLE_APPLICATION_CREDENTIALS string
+	LINE_CHANNEL_ACCESS_TOKEN      string
 	MODE                           Mode
 )
 
@@ -33,6 +34,11 @@ func init() {
 	// 	panic(err)
 	// }
 
+	LINE_CHANNEL_ACCESS_TOKEN, err = getLINE_CHANNEL_ACCESS_TOKEN()
+	if err != nil {
+		panic(err)
+	}
+
 	MODE, err = getMODE()
 	if err != nil {
 		panic(err)
@@ -56,6 +62,15 @@ func getPORT() (string, error) {
 // 	}
 // 	return e, nil
 // }
+
+func getLINE_CHANNEL_ACCESS_TOKEN() (string, error) {
+	key := "LINE_CHANNEL_ACCESS_TOKEN"
+	e := os.Getenv(key)
+	if e == "" {
+		return "", fmt.Errorf("the environment variable %s must be filled", key)
+	}
+	return e, nil
+}
 
 func getMODE() (Mode, error) {
 	var m Mode
