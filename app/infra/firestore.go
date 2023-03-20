@@ -24,8 +24,8 @@ type Firestore struct {
 func Initialize() (*Firestore, error) {
 	ctx := context.Background()
 	opt := option.WithCredentialsFile(config.GOOGLE_APPLICATION_CREDENTIALS)
-	//conf := &firebase.Config{ProjectID: "funhackathon22"}
-	app, err := firebase.NewApp(ctx, nil, opt)
+	conf := &firebase.Config{ProjectID: "kanko-hackathon"}
+	app, err := firebase.NewApp(ctx, conf, opt)
 	if err != nil {
 		return nil, ErrFirebaseInit
 	}

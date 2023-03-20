@@ -42,7 +42,7 @@ type Request struct {
 	Events      []Event `json:"events"`
 }
 
-func SendMessage[R any](reply R) error {
+func SendMessage(reply any) error {
 	payload, err := json.Marshal(reply)
 	if err != nil {
 		return err
