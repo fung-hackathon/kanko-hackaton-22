@@ -18,30 +18,28 @@
     >
   </head>
   <body>
-    <h1>集めたクイズ</h1>
+    <h1>函館クイズ探訪</h1>
+    <h2>ついでに函館、寄ってかない？</h2>
+    <p>
+      歴史、まちなみ、食、自然...<br />
+      魅力いっぱいのまち函館を、ついでにちょっと観光していきませんか？<br />
+      クイズラリーをしながら、函館の人気観光スポットを巡ってみよう！<br />
+      今回は函館山周辺の人気観光スポットをピックアップ！
+    </p>
+    <h2>クイズラリー対象スポット一覧</h2>
     <iframe src="https://www.google.com/maps/d/u/0/embed?mid=1NYSgCaFkqu0dZ8aoeAFft2PVmNx379k&ehbc=2E312F" width="640" height="480"></iframe>
-    {{ if ne .Gallery.Zero true }}
     <ol>
-      {{ range .Gallery.Spots }}
-        {{if .Progress}}
+      {{ range .Spots }}
         <li>
           <h4><a href="{{ .Url }}">{{ .Name }}</a></h4>
           <img src="{{ .Image }}" />
-          <p>
-            <span class="quiz"><span class="question">問題</span>{{ .Quiz.Q }}</span>
-            <span class="quiz"><span class="answer">解答</span>{{ .Quiz.A }} <br />
-            {{ .Quiz.Comment }}</span>
-          </p>
+          <p>営業時間 {{ .OpenTime }}</p>
         </li>
-        {{ end }}
       {{ end }}
     </ol>
-    {{ else }}
-      <p>クイズをまだ解いていません</p>
-    {{ end }}
-   <footer>
-    <hr />
-    このページの本文とデータは <a href="https://www.city.hakodate.hokkaido.jp/">函館市ウェブサイト</a> のオープンデータを利用しています。
-   </footer>
+    <footer>
+      <hr />
+      このページの本文とデータは <a href="https://www.city.hakodate.hokkaido.jp/">函館市ウェブサイト</a> のオープンデータを利用しています。
+    </footer>
   </body>
 </html>

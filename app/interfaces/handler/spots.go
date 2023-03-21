@@ -30,6 +30,11 @@ func (h *ViewHandler) Spots(c echo.Context) error {
 	return err
 }
 
+type galleryProps struct {
+	Spots []gallery
+	Zero  bool
+}
+
 type gallery struct {
 	Name     string
 	Url      string
@@ -66,6 +71,7 @@ func (h *ViewHandler) Gallery(c echo.Context) error {
 		c.String(http.StatusInternalServerError, err.Error())
 	}
 	var progress []gallery
+	zeroFlag := true
 	for i, v := range progress_raw {
 		newProg, ok := v.(bool)
 		if !ok {
@@ -90,14 +96,21 @@ func (h *ViewHandler) Gallery(c echo.Context) error {
 		}
 
 		progress = append(progress, newValue)
+
+		if newProg {
+			zeroFlag = false
+		}
 	}
 
 	log.Println(progress)
 
 	data := struct {
-		Gallery []gallery
+		Gallery galleryProps
 	}{
-		Gallery: progress,
+		Gallery: galleryProps{
+			Spots: progress,
+			Zero:  zeroFlag,
+		},
 	}
 
 	if err := c.Render(http.StatusOK, "gallery.html", data); err != nil {
@@ -108,4 +121,15 @@ func (h *ViewHandler) Gallery(c echo.Context) error {
 		return c.String(http.StatusInternalServerError, err.Error())
 	}
 	return nil
+}
+
+func (h *ViewHandler) Landing(c echo.Context) error {
+	data := struct {
+		Spots []data.Spot
+	}{
+		Spots: data.SpotsData,
+	}
+	err := c.Render(http.StatusOK, "index.html", data)
+	log.Println(err)
+	return err
 }
