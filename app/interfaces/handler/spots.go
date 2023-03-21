@@ -1,6 +1,7 @@
 package handler
 
 import (
+	"kanko-hackaton-22/app/config"
 	"kanko-hackaton-22/app/data"
 	"kanko-hackaton-22/app/infra"
 	"kanko-hackaton-22/app/logger"
@@ -22,8 +23,10 @@ func NewViewHandler(infra *infra.Firestore) *ViewHandler {
 func (h *ViewHandler) Spots(c echo.Context) error {
 	data := struct {
 		Spots []data.Spot
+		Host  string
 	}{
 		Spots: data.SpotsData,
+		Host:  config.HOST.File(""),
 	}
 	err := c.Render(http.StatusOK, "spots.html", data)
 	log.Println(err)
@@ -106,11 +109,13 @@ func (h *ViewHandler) Gallery(c echo.Context) error {
 
 	data := struct {
 		Gallery galleryProps
+		Host    string
 	}{
 		Gallery: galleryProps{
 			Spots: progress,
 			Zero:  zeroFlag,
 		},
+		Host: config.HOST.File(""),
 	}
 
 	if err := c.Render(http.StatusOK, "gallery.html", data); err != nil {
@@ -126,8 +131,10 @@ func (h *ViewHandler) Gallery(c echo.Context) error {
 func (h *ViewHandler) Landing(c echo.Context) error {
 	data := struct {
 		Spots []data.Spot
+		Host  string
 	}{
 		Spots: data.SpotsData,
+		Host:  config.HOST.File(""),
 	}
 	err := c.Render(http.StatusOK, "index.html", data)
 	log.Println(err)

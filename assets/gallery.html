@@ -1,6 +1,13 @@
 <!DOCTYPE html>
-<html>
+<html lang="ja">
   <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta property="og:site_name" content="函館クイズ探訪" />
+    <meta property="og:url" content="https://{{}}/gallery" />
+    <meta property="og:image" content="https://example.com/img/mthakodate.jpg" />
+    <meta property="og:type" content="website" />
+    <meta name="twitter:card" content="summary_large_image" />
     <title>函館クイズ探訪</title>
     <link
       href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
@@ -29,8 +36,10 @@
           <img src="{{ .Image }}" />
           <p>
             <span class="quiz"><span class="question">問題</span>{{ .Quiz.Q }}</span>
-            <span class="quiz"><span class="answer">解答</span>{{ .Quiz.A }} <br />
-            {{ .Quiz.Comment }}</span>
+            <span class="quiz">
+              <span class="answer">解答</span>{{ .Quiz.A }} <br />              
+              <span class="comment">{{ .Quiz.Comment }}</span>
+            </span>
           </p>
         </li>
         {{ end }}
