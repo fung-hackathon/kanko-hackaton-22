@@ -3,6 +3,7 @@ package command
 import (
 	"kanko-hackaton-22/app/data"
 	"kanko-hackaton-22/app/infra"
+	"kanko-hackaton-22/app/package/strDiff"
 )
 
 type Command struct {
@@ -87,6 +88,7 @@ func (c *Command) ReadText(text string, userid string) (string, interface{}, err
 		c.infra.Update(userid, "quizStatus", 0)
 		return "クイズを終了します。次回の挑戦お待ちしてます！\n左下の ≡ アイコンをタップすると、使える機能のリストが表示されます↙", nil, nil
 	}
+
 	switch quizStatus {
 	case 1:
 		quizid := -1
@@ -99,12 +101,31 @@ func (c *Command) ReadText(text string, userid string) (string, interface{}, err
 			quickReply := getQuickReply()
 			return "すみません、入力が間違っているようです...\nもう一度入力してください。\n(やめるときは「やめる」を入力してください)", quickReply, nil
 		}
+
+		progress := user["progress"].([]interface{})
+		if progress[quizid-1] == true {
+			quickReply := getQuickReply()
+			return "すでにクリア済みの観光地です👀\n他の観光地を選んでください↓\n(やめるときは「やめる」を入力してください)", quickReply, nil
+		}
+
 		c.infra.Update(userid, "quizStatus", 2)
 		c.infra.Update(userid, "quizid", quizid)
 
-		return data.SpotsData[quizid-1].Name + "ですね！\n楽しめましたでしょうか？✨\nでは、答えをどうぞ！", nil, nil
+		return data.SpotsData[quizid-1].Name + "ですね！\n楽しめましたでしょうか？✨\n\nでは、答えをどうぞ！\n(「ひらがな」でお願いします)", nil, nil
+
 	case 2:
-		return "すみません、違うようです...\n別の答えを教えてください👀", nil, nil
+		quizid := user["quizid"].(int64)
+		answer := data.SpotsData[quizid-1].Quiz.A
+		if strDiff.EditDistance(answer, text) <= 1 {
+			c.infra.Update(userid, "quizStatus", 0)
+			c.infra.Update(userid, "quizid", 0)
+			progress := user["progress"].([]interface{})
+			progress[quizid-1] = true
+			c.infra.Update(userid, "progress", progress)
+			return "正解です！\nおめでとうございます🎉\n「ギャラリー」に新しい観光地情報が追加されます！\n左下の ≡ アイコンをタップして確認してみてください！↙", nil, nil
+		}
+
+		return "すみません、違うようです...\n別の答えを入力してください👀", nil, nil
 	}
 	return "すみません、最初に何をしてほしいか教えてください...\n左下の ≡ アイコンをタップすると、使える機能のリストが表示されます↙", nil, nil
 }
