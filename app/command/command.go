@@ -1,6 +1,7 @@
 package command
 
 import (
+	"kanko-hackaton-22/app/config"
 	"kanko-hackaton-22/app/data"
 	"kanko-hackaton-22/app/infra"
 	"kanko-hackaton-22/app/package/strDiff"
@@ -37,11 +38,11 @@ func getQuickReplyForSpot() QuickReply {
 	quickReply := QuickReply{
 		Items: []Item{},
 	}
-
 	for _, spot := range data.SpotsData {
 		quickReply.Items = append(quickReply.Items, Item{
-			Type:     "action",
-			ImageURL: spot.Image,
+			Type: "action",
+			// ImageURL: spot.Image,
+			ImageURL: "",
 			Action: ItemAction{
 				Type:  "message",
 				Label: spot.Name,
@@ -91,11 +92,12 @@ func (c *Command) ReadCommand(text string, userid string) (string, interface{}, 
 
 	switch text {
 	case "クイズラリーを解く":
-		c.infra.Update(userid, "recommendStatus", 0)
+
 		user, err := c.infra.Get(userid)
 		if err != nil || user == nil {
 			c.setNewUser(userid)
 		}
+		c.infra.Update(userid, "recommendStatus", 0)
 		c.infra.Update(userid, "quizStatus", 1)
 
 		quickReply := getQuickReplyForSpot()
@@ -103,16 +105,30 @@ func (c *Command) ReadCommand(text string, userid string) (string, interface{}, 
 		return "クイズラリーですね！\n巡った観光地はどこですか？選んでください↓", quickReply, nil
 
 	case "おすすめを調べる":
-		c.infra.Update(userid, "quizStatus", 0)
 		user, err := c.infra.Get(userid)
 		if err != nil || user == nil {
 			c.setNewUser(userid)
 		}
+		c.infra.Update(userid, "quizStatus", 0)
 		c.infra.Update(userid, "recommendStatus", 1)
 
 		quickReply := getQuickReplyForAccessibility()
 
 		return "おすすめですね！任せてください💪\nクイズのある観光地を探します。\n\nどのくらいの時間で移動できますか？選んでください↓", quickReply, nil
+
+	case "ギャラリーを開く":
+		user, err := c.infra.Get(userid)
+		if err != nil || user == nil {
+			c.setNewUser(userid)
+		}
+		return config.HOST.File("gallery?userid=" + userid), nil, nil
+
+	case "クイズラリーの対象スポットを見る":
+		user, err := c.infra.Get(userid)
+		if err != nil || user == nil {
+			c.setNewUser(userid)
+		}
+		return config.HOST.File("spots"), nil, nil
 
 	default:
 		c.infra.Update(userid, "quizStatus", 0)
@@ -167,7 +183,7 @@ func (c *Command) ReadText(text string, userid string) (string, interface{}, err
 			PreviewImageUrl:    spot.Image,
 		}
 
-		return "では、このような場所はどうでしょうか？\n\n「" + spot.Name + "」\n" + spot.Quiz.Comment + "\n\nクイズラリーもありますよ！✨\n是非訪れてみてください👀\n\n他になにかお手伝いできることがあれば、左下の ≡ アイコンをタップして選択してください↙", imageMessage, nil
+		return "では、このような場所はどうでしょうか？\n\n「" + spot.Name + "」\n\nクイズラリーもありますよ！✨\n是非訪れてみてください👀\n\n他になにかお手伝いできることがあれば、左下の ≡ アイコンをタップして選択してください↙", imageMessage, nil
 
 	}
 
