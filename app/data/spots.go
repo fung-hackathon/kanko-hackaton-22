@@ -14,9 +14,10 @@ type Spot struct {
 }
 
 type Quiz struct {
-	Q       string
-	A       string
-	Comment string
+	Q             string
+	A             string
+	Comment       string
+	Accessibility int
 }
 
 var (
@@ -31,6 +32,7 @@ var (
 				A:       "エレベータ",
 				Comment: "1934年(昭和9年)の3月以降に設置されたと言われています。",
 			},
+			Accessibility: 2,
 		},
 		{
 			Name:     "旧イギリス領事館（開港記念館）",
@@ -41,6 +43,7 @@ var (
 				Q: "問題問題問題",
 				A: "かいとう",
 			},
+			Accessibility: 3,
 		},
 		{
 			Name:     "文学館",
@@ -51,6 +54,7 @@ var (
 				Q: "問題問題問題",
 				A: "かいとう",
 			},
+			Accessibility: 3,
 		},
 		{
 			Name:     "函館市北方民族資料館",
@@ -61,6 +65,7 @@ var (
 				Q: "問題問題問題",
 				A: "かいとう",
 			},
+			Accessibility: 3,
 		},
 		{
 			Name:     "函館市青函連絡船記念館摩周丸",
@@ -71,6 +76,7 @@ var (
 				Q: "問題問題問題",
 				A: "かいとう",
 			},
+			Accessibility: 1,
 		},
 		{
 			Name:     "市立函館博物館",
@@ -81,6 +87,7 @@ var (
 				Q: "問題問題問題",
 				A: "かいとう",
 			},
+			Accessibility: 4,
 		},
 		{
 			Name:     "函館山",
@@ -91,6 +98,7 @@ var (
 				Q: "問題問題問題",
 				A: "かいとう",
 			},
+			Accessibility: 4,
 		},
 	}
 )
