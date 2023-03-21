@@ -40,9 +40,8 @@ func getQuickReplyForSpot() QuickReply {
 	}
 	for _, spot := range data.SpotsData {
 		quickReply.Items = append(quickReply.Items, Item{
-			Type: "action",
-			// ImageURL: spot.Image,
-			ImageURL: "",
+			Type:     "action",
+			ImageURL: spot.Image,
 			Action: ItemAction{
 				Type:  "message",
 				Label: spot.Name,
