@@ -5,11 +5,12 @@ import (
 )
 
 type Spot struct {
-	Name     string
-	Url      string
-	OpenTime string
-	Image    string
-	Quiz     Quiz
+	Name          string
+	Url           string
+	OpenTime      string
+	Image         string
+	Quiz          Quiz
+	Accessibility int
 }
 
 type Quiz struct {

@@ -110,12 +110,14 @@ func (h *ViewHandler) Gallery(c echo.Context) error {
 	data := struct {
 		Gallery galleryProps
 		Host    string
+		UserID  string
 	}{
 		Gallery: galleryProps{
 			Spots: progress,
 			Zero:  zeroFlag,
 		},
-		Host: config.HOST.File(""),
+		Host:   config.HOST.File(""),
+		UserID: userID,
 	}
 
 	if err := c.Render(http.StatusOK, "gallery.html", data); err != nil {
