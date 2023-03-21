@@ -1,8 +1,9 @@
 package user
 
 type User struct {
-	ID         string `json:"userid"`
-	QuizStatus int    `json:"quizStatus"`
-	Quizid     int    `json:"quizid"`
-	Progress   []bool `json:"progress"`
+	ID              string `json:"userid"`
+	QuizStatus      int    `json:"quizStatus"`
+	Quizid          int    `json:"quizid"`
+	RecommendStatus int    `json:"recommendStatus"`
+	Progress        []bool `json:"progress"`
 }

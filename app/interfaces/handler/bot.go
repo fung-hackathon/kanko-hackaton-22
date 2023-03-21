@@ -49,12 +49,38 @@ func (h *BotHandler) Bot(c echo.Context) error {
 	}
 
 	if commandReply != "" {
-		reply.Messages = []message.Message{
-			{
-				Type:       "text",
-				Text:       commandReply,
-				QuickReply: quickReply,
-			},
+
+		switch quickReply.(type) {
+		case command.QuickReply:
+			reply.Messages = []message.Message{
+				{
+					Type:       "text",
+					Text:       commandReply,
+					QuickReply: quickReply,
+				},
+			}
+
+		case command.ImageMessage:
+			reply.Messages = []message.Message{
+
+				{
+					Type:               "image",
+					OriginalContentUrl: quickReply.(command.ImageMessage).OriginalContentUrl,
+					PreviewImageUrl:    quickReply.(command.ImageMessage).PreviewImageUrl,
+				},
+				{
+					Type: "text",
+					Text: commandReply,
+				},
+			}
+
+		default:
+			reply.Messages = []message.Message{
+				{
+					Type: "text",
+					Text: commandReply,
+				},
+			}
 		}
 	}
 
