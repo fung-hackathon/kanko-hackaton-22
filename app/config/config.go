@@ -3,6 +3,7 @@ package config
 import (
 	"fmt"
 	"os"
+	"strings"
 )
 
 var (
@@ -10,10 +11,12 @@ var (
 	GOOGLE_APPLICATION_CREDENTIALS string
 	LINE_CHANNEL_ACCESS_TOKEN      string
 	MODE                           Mode
+	HOST                           HostName
 )
 
 type (
-	Mode string
+	Mode     string
+	HostName string
 )
 
 var (
@@ -43,6 +46,12 @@ func init() {
 	if err != nil {
 		panic(err)
 	}
+
+	HOST, err = getHOST()
+	if err != nil {
+		panic(err)
+	}
+
 }
 
 func getPORT() (string, error) {
@@ -80,4 +89,23 @@ func getMODE() (Mode, error) {
 		m = Developing
 	}
 	return m, nil
+}
+
+func getHOST() (HostName, error) {
+	key := "HOST"
+	e := os.Getenv(key)
+	if e == "" {
+		return "", fmt.Errorf("the environment variable %s must be filled", key)
+	}
+	return HostName(e), nil
+}
+
+func (h HostName) File(path string) string {
+	host := strings.Split(path, ":")
+	fmt.Println(host)
+	if MODE == Production {
+		return fmt.Sprintf("https://%s/%s", h, path)
+	} else {
+		return fmt.Sprintf("http://%s/%s", h, path)
+	}
 }
