@@ -19,9 +19,11 @@ type Event struct {
 }
 
 type Message struct {
-	Type       string      `json:"type"`
-	Text       string      `json:"text"`
-	QuickReply interface{} `json:"quickReply"`
+	Type               string      `json:"type"`
+	Text               string      `json:"text,omitempty"`
+	QuickReply         interface{} `json:"quickReply,omitempty"`
+	OriginalContentUrl string      `json:"originalContentUrl,omitempty"`
+	PreviewImageUrl    string      `json:"previewImageUrl,omitempty"`
 }
 
 type ReplyMessage struct {
