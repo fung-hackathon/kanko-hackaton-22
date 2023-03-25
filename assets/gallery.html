@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta property="og:site_name" content="さくっと探訪 はこだてクイズ" />
-    <meta property="og:url" content="{{ .Host }}spots" />
+    <meta property="og:url" content="{{ .Host }}gallery?userid={{ .UserID }}" />
     <meta property="og:image" content="{{ .Host }}static/img/mthakodate.jpg" />
     <meta property="og:type" content="website" />
     <meta name="twitter:card" content="summary_large_image" />
@@ -24,20 +24,29 @@
 <link href="https://fonts.googleapis.com/css2?family=Kosugi+Maru&display=swap" rel="stylesheet"> 
   </head>
   <body>
-   <h1>クイズラリー対象スポット一覧</h1>
-   <iframe src="https://www.google.com/maps/d/u/0/embed?mid=1NYSgCaFkqu0dZ8aoeAFft2PVmNx379k&ehbc=2E312F" width="640" height="480"></iframe>
-   <ol>
-    {{ range .Spots }}
-    <li>
-      <h4><a href="{{ .Url }}">{{ .Name }}</a></h4>
-      <img src="{{ .Image }}" />
-      <p>
-        営業時間 {{ .OpenTime }} <br />
-        <span class="quiz"><span class="question">問題</span>{{ .Quiz.Q }}</span>
-      </p>
-    </li>
+    <h1>集めたクイズ</h1>
+    <iframe src="https://www.google.com/maps/d/u/0/embed?mid=1NYSgCaFkqu0dZ8aoeAFft2PVmNx379k&ehbc=2E312F" width="640" height="480"></iframe>
+    {{ if ne .Gallery.Zero true }}
+    <ol>
+      {{ range .Gallery.Spots }}
+        {{if .Progress}}
+        <li>
+          <h4><a href="{{ .Url }}">{{ .Name }}</a></h4>
+          <img src="{{ .Image }}" />
+          <p>
+            <span class="quiz"><span class="question">問題</span>{{ .Quiz.Q }}</span>
+            <span class="quiz">
+              <span class="answer">解答</span>{{ .Quiz.A }} <br />              
+              <span class="comment">{{ .Quiz.Comment }}</span>
+            </span>
+          </p>
+        </li>
+        {{ end }}
+      {{ end }}
+    </ol>
+    {{ else }}
+      <p>クイズをまだ解いていません</p>
     {{ end }}
-   </ol>
    <footer>
     <hr />
     このページの本文とデータは <a href="https://www.city.hakodate.hokkaido.jp/">函館市ウェブサイト</a> のオープンデータを利用しています。

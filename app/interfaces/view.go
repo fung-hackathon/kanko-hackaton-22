@@ -17,7 +17,7 @@ func (t *Template) Render(w io.Writer, name string, data interface{}, c echo.Con
 	return t.templates.ExecuteTemplate(w, name, data)
 }
 
-func viewRouter(e *echo.Echo) {
+func viewRouter(e *echo.Echo, handler *handler.ViewHandler) {
 	t := &Template{
 		templates: template.Must(template.ParseGlob("assets/*.html")),
 	}
@@ -25,4 +25,7 @@ func viewRouter(e *echo.Echo) {
 	e.Renderer = t
 
 	e.GET("/spots", handler.Spots)
+	e.GET("/gallery", handler.Gallery)
+	e.GET("/", handler.Landing)
+	e.Static("/static", "static")
 }
